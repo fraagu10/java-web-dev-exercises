@@ -28,22 +28,51 @@ public class Student {
         return (this.name + " has a GPA of: " + this.gpa);
     }
 
-
-     //TODO: Uncomment and complete the getGradeLevel method here:
-//    public String getGradeLevel() {
-//        // Determine the grade level of the student based on numberOfCredits
-//    }
-
-    // TODO: Complete the addGrade method.
-    public void addGrade(int courseCredits, double grade) {
-        // Update the appropriate fields: numberOfCredits, gpa
+    public String getGradeLevel() {
+        // Determine the grade level of the student based on numberOfCredits
+        if(numberOfCredits >= 0 && numberOfCredits <= 29) {
+            return "Student " + this.name + " is a Freshman.";
+        } else if(numberOfCredits > 29 && numberOfCredits <= 59) {
+            return "Student " + this.name + " is a Sophomore.";
+        } else if(numberOfCredits > 59 && numberOfCredits <= 89) {
+            return "Student " + this.name + " is a Junior.";
+        } else if(numberOfCredits > 90) {
+            return "Student " + this.name + " is a Sophomore.";
+        }
+        return "Please enter a valid input.";
     }
 
-    // TODO: Add your custom 'toString' method here. Make sure it returns a well-formatted String rather
-    //  than just the class fields.
+    public void addGrade(int courseCredits, double grade) {
+        // Update the appropriate fields: numberOfCredits, gpa
+        double totalQualityScore = this.gpa * this.numberOfCredits;
+        double newTotalQualityScore = totalQualityScore + (courseCredits * grade);
+        this.numberOfCredits += courseCredits;
+        this.gpa = newTotalQualityScore/this.numberOfCredits;
+    }
 
-    // TODO: Add your custom 'equals' method here. Consider which fields should match in order to call two
-    //  Student objects equal.
+    // Custom toString method returning all student info
+    public String toString() {
+        return "\nStudent: " + this.name + "\nCredits: " + this.numberOfCredits +
+                "\nGPA: " + this.gpa + "\nStudent ID: " + this.studentId;
+    }
+
+    // Custom equal method comparing IDs in order to determine identity
+    public boolean equals(Object toBeCompared) {
+        if(toBeCompared == this) {
+            return true;
+        }
+
+        if(toBeCompared == null) {
+            return false;
+        }
+
+        if(toBeCompared.getClass() != getClass()) {
+            return false;
+        }
+
+        Student theStudent = (Student) toBeCompared;
+        return theStudent.getStudentId() == getStudentId();
+    }
 
     public String getName() {
         return name;
@@ -79,11 +108,15 @@ public class Student {
 
     public static void main(String[] args) {
         Student sally = new Student("Sally",1,1,4.0);
-        System.out.println("The Student class works! " + sally.getName() + " is a student!");
-        System.out.println(sally);
+        Student nelly = new Student("Nelly", 2, 9, 3.6);
+
         sally.addGrade(12, 3.5);
-        System.out.println(sally);
-        sally.addGrade(25, 3.8);
-        System.out.println(sally);
+        sally.addGrade(9, 3.8);
+        nelly.addGrade(6, 3.0);
+        nelly.addGrade(10, 3.8);
+
+
+        System.out.println(sally.toString());
+        System.out.println(nelly.toString());
     }
 }
